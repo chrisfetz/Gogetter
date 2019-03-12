@@ -7,6 +7,9 @@ import android.arch.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 
+/**
+ * The ViewModel that passes data from the Repository to the Activity.
+ */
 public class MainViewModel extends AndroidViewModel {
 
     private static MutableLiveData<ArrayList<String>> strings;
