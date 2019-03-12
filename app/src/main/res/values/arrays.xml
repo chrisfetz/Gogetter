@@ -6,4 +6,11 @@
         <item>@string/name_color_yellow</item>
         <item>@string/name_color_green</item>
     </string-array>
+
+    <array name="color_values">
+        <item>@color/color_task_blue</item>
+        <item>@color/color_task_red</item>
+        <item>@color/color_task_yellow</item>
+        <item>@color/color_task_green</item>
+    </array>
 </resources>

@@ -15,4 +15,6 @@
     <string name="name_color_yellow">Yellow</string>
     <string name="name_color_green">Green</string>
 
+    <!--Error strings-->
+    <string name="error_no_title">Please enter a title.</string>
 </resources>

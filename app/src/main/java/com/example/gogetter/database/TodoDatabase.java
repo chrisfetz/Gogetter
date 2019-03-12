@@ -36,5 +36,5 @@ public abstract class TodoDatabase extends RoomDatabase {
       return sInstance;
    }
 
-
+   public abstract TodoDao todoDao();
 }
