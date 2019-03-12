@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">Gogetter</string>
 
+    <!-- - - - - - - -  - - - - - - -->
     <!--Used on the AddTask activity-->
+    <!-- - - - - - - -  - - - - - - -->
     <string name="hint_set_task_title">Enter title...</string>
     <string name="hint_set_task_description">Set description...</string>
-    <string name="hint_set_task_color">Set color</string>
 
+    <!--Color strings-->
+    <string name="text_set_task_color">Set Color</string>
+
+    <string name="name_color_blue">Blue</string>
+    <string name="name_color_red">Red</string>
+    <string name="name_color_yellow">Yellow</string>
+    <string name="name_color_green">Green</string>
 
 </resources>

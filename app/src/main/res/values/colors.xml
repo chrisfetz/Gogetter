@@ -3,4 +3,11 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Task colors, I'm using the Google colors because I'm a fanboy lolz-->
+    <color name="color_task_blue">#4285F4</color>
+    <color name="color_task_red">#DB4437</color>
+    <color name="color_task_yellow">#F4B400</color>
+    <color name="color_task_green">#0F9D58</color>
+
 </resources>
