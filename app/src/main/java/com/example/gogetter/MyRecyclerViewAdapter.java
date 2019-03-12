@@ -71,13 +71,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         this.mClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
-    }
-
     public void setStrings(ArrayList<String> strings){
         mData = strings;
         notifyDataSetChanged();
+    }
+
+    /**
+     * Interface used by RecyclerViews to handle OnClick events,
+     * governing the behavior when an item at a given position is clicked.
+     */
+    interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }
