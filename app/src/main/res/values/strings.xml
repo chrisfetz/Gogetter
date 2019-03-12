@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Gogetter</string>
+
+    <!--Used on the AddTask activity-->
+    <string name="hint_set_task_title">Enter title...</string>
+    <string name="hint_set_task_description">Set description...</string>
+    <string name="hint_set_task_color">Set color</string>
+
+
 </resources>

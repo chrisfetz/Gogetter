@@ -1,20 +1,20 @@
 package com.example.gogetter;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import android.content.Intent;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 
 public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
 
@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         setContentView(R.layout.activity_main);
 
         //setting onclick for Floating action button
-        mFab = findViewById(R.id.fab);
+        mFab = findViewById(R.id.fab_main);
 
         mFab.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
-                Toast.makeText(MainActivity.this, "Floating Action Button clicked.", Toast.LENGTH_SHORT).show();
-                MainViewModel.addString("New item!");
+                Intent goToAddTask = new Intent(MainActivity.this, AddTaskActivity.class);
+                startActivity(goToAddTask);
             }
         });
 
