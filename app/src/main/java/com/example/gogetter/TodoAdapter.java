@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +30,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
+        LinearLayout myLinearLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.tvTaskTitle);
+            myLinearLayout = itemView.findViewById(R.id.layoutTaskRow);
             itemView.setOnClickListener(this);
         }
 
@@ -63,15 +66,15 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         //TODO: Get rid of hardcoded background color and repeated
         switch (color) {
-            case 0: holder.myTextView.setBackgroundColor(Color.parseColor("#4285F4"));
+            case 0: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#4285F4"));
             break;
-            case 1: holder.myTextView.setBackgroundColor(Color.parseColor("#DB4437"));
+            case 1: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#DB4437"));
             break;
-            case 2: holder.myTextView.setBackgroundColor(Color.parseColor("#F4B400"));
+            case 2: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#F4B400"));
             break;
-            case 3: holder.myTextView.setBackgroundColor(Color.parseColor("#0F9D58"));
+            case 3: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#0F9D58"));
             break;
-            default: holder.myTextView.setBackgroundColor(Color.parseColor("#4285F4"));
+            default: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#4285F4"));
         }
     }
 
@@ -99,6 +102,7 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
      */
     public void setContents(List<TodoTask> listFromLiveData) {
         mData = listFromLiveData;
+        notifyDataSetChanged();
     }
 
     /**

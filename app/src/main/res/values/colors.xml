@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="color_text_black">#FFFFFF</color>
+
     <!--Task colors, I'm using the Google colors because I'm a fanboy lol-->
     <color name="color_task_blue">#4285F4</color>
     <color name="color_task_red">#DB4437</color>

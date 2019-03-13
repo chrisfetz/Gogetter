@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     private FloatingActionButton mFab;
     private TodoDatabase mTdb;
 
-    //TODO: Make list refresh after new item is entered without having to rotate phone
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,10 +68,6 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
             @Override
             public void onChanged(@Nullable List<TodoTask> tasks) {
                 Log.d(TAG, "List of items updated in the ViewModel by button!");
-                if (tasks != null){
-                    Toast.makeText(getApplicationContext(), tasks.get(0).getTitle(), Toast.LENGTH_LONG)
-                         .show();
-                }
                 mAdapter.setContents(tasks);
             }
         });
