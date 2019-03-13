@@ -36,6 +36,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private int mColor = 0;
     private static final String TAG = AddTaskActivity.class.getSimpleName();
 
+    //TODO: Add Logs for important tasks: color choice, task creation, errors
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,7 @@ public class AddTaskActivity extends AppCompatActivity {
         });
     }
 
+    //TODO: Use a DialogFragment so dialog does not disappear on phone rotation
     /**
      * Creates a dialog to pick the task's color when the user presses the "SET COLOR" button.
      * Changes the color of the button to the user's choice.

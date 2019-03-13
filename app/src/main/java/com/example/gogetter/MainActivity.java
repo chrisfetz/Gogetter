@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     private FloatingActionButton mFab;
     private TodoDatabase mTdb;
 
+    //TODO: Add logging for important tasks, list generation, onChanged called
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
