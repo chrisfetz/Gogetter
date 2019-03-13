@@ -13,7 +13,7 @@ import android.util.Log;
  * Contains a singleton constructor to prevent multiple instances
  * of my database from being created.
  */
-@Database(entities =  {TodoTask.class}, version = 1, exportSchema = false)
+@Database(entities =  {TodoTask.class}, version = 2, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class TodoDatabase extends RoomDatabase {
 
@@ -28,6 +28,7 @@ public abstract class TodoDatabase extends RoomDatabase {
             Log.d(TAG, "Creating TodoDatabase instance");
             sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         TodoDatabase.class, TodoDatabase.DATABASE_NAME)
+                        .fallbackToDestructiveMigration()
                         .build();
          }
       }

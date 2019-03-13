@@ -22,7 +22,7 @@ import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
 
-    private TodoDatabase tDb;
+    private TodoDatabase mTdb;
 
     //UI Elements
     private FloatingActionButton mSubmit;
@@ -34,13 +34,14 @@ public class AddTaskActivity extends AppCompatActivity {
     TypedArray colors;
 
     private int mColor = 0;
+    private static final String TAG = AddTaskActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        tDb = TodoDatabase.getInstance(getApplicationContext());
+        mTdb = TodoDatabase.getInstance(getApplicationContext());
 
         mTitle = findViewById(R.id.et_set_task_title);
         mDescription = findViewById(R.id.et_set_task_description);
@@ -102,10 +103,15 @@ public class AddTaskActivity extends AppCompatActivity {
             Toast.makeText(AddTaskActivity.this, R.string.error_no_title,
                     Toast.LENGTH_LONG).show();
         } else {
-//            Date date = new Date();
-//            TodoTask todoTask = new TodoTask(title, description, mColor, date, date);
-            //TODO: Write the todoTask to the database without using the main thread.
-//            finish();
+            Date date = new Date();
+            final TodoTask todoTask = new TodoTask(title, description, mColor, date, date);
+            BackendExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mTdb.todoDao().insertTask(todoTask);
+                    finish();
+                }
+            });
         }
     }
 }

@@ -2,39 +2,32 @@ package com.example.gogetter;
 
 
 import android.app.Application;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
+import com.example.gogetter.database.TodoDatabase;
+import com.example.gogetter.database.TodoTask;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
 
 /**
  * The ViewModel that passes data from the Repository to the Activity.
  */
 public class MainViewModel extends AndroidViewModel {
 
-    private static MutableLiveData<ArrayList<String>> strings;
+    private LiveData<List<TodoTask>> tasks;
+    private TodoDatabase mTdb;
 
-    public MainViewModel(Application application) {
+
+    public MainViewModel(@NonNull Application application, TodoDatabase database){
         super(application);
-        ArrayList<String> stringsList = new ArrayList<>();
-        stringsList.add("Camel");
-        stringsList.add("Hippo");
-        stringsList.add("Zebra");
-        strings = new MutableLiveData<>();
-        strings.postValue(stringsList);
+        mTdb = database;
+        tasks = mTdb.todoDao().loadAllTasks();
     }
 
-    //getter for the MutableLiveData
-    public MutableLiveData<ArrayList<String>> getStrings() {
-        return strings;
-    }
-
-    //add a value to the MutableLiveData
-    public static void addString(String newString){
-        ArrayList<String> newList = strings.getValue();
-        System.out.println(newList.toString());
-        newList.add(newString);
-        System.out.println(newList.toString());
-        strings.postValue(newList);
+    public LiveData<List<TodoTask>> getTasks() {
+        return tasks;
     }
 }

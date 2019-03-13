@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity(tableName = "task")
 public class TodoTask {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private String description;

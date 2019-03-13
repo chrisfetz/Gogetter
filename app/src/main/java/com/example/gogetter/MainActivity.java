@@ -3,6 +3,9 @@ package com.example.gogetter;
 import androidx.lifecycle.Observer;
 import android.content.Intent;
 import androidx.annotation.Nullable;
+
+import com.example.gogetter.database.TodoDatabase;
+import com.example.gogetter.database.TodoTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,21 +15,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import androidx.lifecycle.ViewModelProviders;
 
-public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.ItemClickListener {
+public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemClickListener {
 
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
 
     //Member variables
-    private MainViewModel mViewModel;
     private RecyclerView mRecyclerView;
-    private MyRecyclerViewAdapter mAdapter;
+    private TodoAdapter mAdapter;
     private FloatingActionButton mFab;
+    private TodoDatabase mTdb;
 
+    //TODO: Make list refresh after new item is entered without having to rotate phone
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,33 +45,35 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                 startActivity(goToAddTask);
             }
         });
-
-        ArrayList<String> animals = new ArrayList<>();
-        animals.add("Camel");
-        animals.add("Hippo");
-        animals.add("Zebra");
         
         // set up the RecyclerView
-        mRecyclerView = findViewById(R.id.rvAnimals);
+        mRecyclerView = findViewById(R.id.rvTasks);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MyRecyclerViewAdapter(this, animals);
-        mAdapter.setClickListener(this);
+        mAdapter = new TodoAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
+
+        mTdb = TodoDatabase.getInstance(getApplicationContext());
         setupViewModel();
     }
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "You clicked " + mAdapter.getItem(position) + " on row number " + position, Toast.LENGTH_SHORT).show();
+        //Todo: add onItemClick
     }
 
     private void setupViewModel(){
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mViewModel.getStrings().observe(this, new Observer<ArrayList<String>>() {
+        MainViewModelFactory factory = new MainViewModelFactory(getApplication(), mTdb);
+        final MainViewModel mViewModel = ViewModelProviders.of(this, factory)
+                .get(MainViewModel.class);
+        mViewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
             @Override
-            public void onChanged(@Nullable ArrayList<String> strings) {
+            public void onChanged(@Nullable List<TodoTask> tasks) {
                 Log.d(TAG, "List of items updated in the ViewModel by button!");
-                mAdapter.setStrings(strings);
+                if (tasks != null){
+                    Toast.makeText(getApplicationContext(), tasks.get(0).getTitle(), Toast.LENGTH_LONG)
+                         .show();
+                }
+                mAdapter.setContents(tasks);
             }
         });
     }
