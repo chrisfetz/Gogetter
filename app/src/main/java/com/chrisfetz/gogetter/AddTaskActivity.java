@@ -1,12 +1,10 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.gogetter.database.TodoDatabase;
-import com.example.gogetter.database.TodoTask;
+import com.chrisfetz.gogetter.database.TodoDatabase;
+import com.chrisfetz.gogetter.database.TodoTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;

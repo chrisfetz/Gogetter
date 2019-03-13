@@ -1,4 +1,4 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;

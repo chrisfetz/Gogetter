@@ -1,4 +1,4 @@
-package com.example.gogetter.database;
+package com.chrisfetz.gogetter.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

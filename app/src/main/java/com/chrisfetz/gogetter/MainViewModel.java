@@ -1,10 +1,10 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 
 import android.app.Application;
 
-import com.example.gogetter.database.TodoDatabase;
-import com.example.gogetter.database.TodoTask;
+import com.chrisfetz.gogetter.database.TodoDatabase;
+import com.chrisfetz.gogetter.database.TodoTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;

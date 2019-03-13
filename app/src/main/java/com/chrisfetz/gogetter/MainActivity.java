@@ -1,11 +1,11 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 import androidx.lifecycle.Observer;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 
-import com.example.gogetter.database.TodoDatabase;
-import com.example.gogetter.database.TodoTask;
+import com.chrisfetz.gogetter.database.TodoDatabase;
+import com.chrisfetz.gogetter.database.TodoTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.List;
 

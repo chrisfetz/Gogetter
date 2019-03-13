@@ -1,4 +1,4 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.gogetter.database.TodoTask;
+import com.chrisfetz.gogetter.database.TodoTask;
 
 import java.util.List;
 

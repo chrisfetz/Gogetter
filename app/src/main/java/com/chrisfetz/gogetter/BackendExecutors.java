@@ -1,4 +1,4 @@
-package com.example.gogetter;
+package com.chrisfetz.gogetter;
 
 import android.os.Handler;
 import android.os.Looper;
