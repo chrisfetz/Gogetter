@@ -1,6 +1,7 @@
 package com.chrisfetz.gogetter;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.chrisfetz.gogetter.database.TodoTask;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
@@ -20,10 +22,12 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     private List<TodoTask> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context mContext;
 
-    TodoAdapter(Context context, ItemClickListener itemClickListener){
-        this.mInflater = LayoutInflater.from(context);
+    public TodoAdapter(Context context, ItemClickListener itemClickListener){
+        mInflater = LayoutInflater.from(context);
         mClickListener = itemClickListener;
+        mContext = context;
     }
 
     // stores and recycles views as they are scrolled off screen
@@ -63,17 +67,23 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         int color = task.getColor();
         holder.myTextView.setText(title);
 
-        //TODO: Get rid of hardcoded background color and repeated
+        //Possible colors of tasks
+        int blue = ContextCompat.getColor(mContext, R.color.color_task_blue);
+        int red = ContextCompat.getColor(mContext, R.color.color_task_red);
+        int yellow = ContextCompat.getColor(mContext, R.color.color_task_yellow);
+        int green = ContextCompat.getColor(mContext, R.color.color_task_green);
+
+
         switch (color) {
-            case 0: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#4285F4"));
+            case 0: holder.myLinearLayout.setBackgroundColor(blue);
             break;
-            case 1: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#DB4437"));
+            case 1: holder.myLinearLayout.setBackgroundColor(red);
             break;
-            case 2: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#F4B400"));
+            case 2: holder.myLinearLayout.setBackgroundColor(yellow);
             break;
-            case 3: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#0F9D58"));
+            case 3: holder.myLinearLayout.setBackgroundColor(green);
             break;
-            default: holder.myLinearLayout.setBackgroundColor(Color.parseColor("#4285F4"));
+            default: holder.myLinearLayout.setBackgroundColor(blue);
         }
     }
 
@@ -105,6 +115,15 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
     }
 
     /**
+     * Gets the TodoTask list from the Adapter.
+     *
+     * @return mData
+     */
+    public List<TodoTask> getContents(){
+        return mData;
+    }
+
+    /**
      * Sets the itemClickListener for a given RecyclerView.
      *
      * @param itemClickListener The Recyclerview's ItemClickListener.
@@ -113,12 +132,20 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         this.mClickListener = itemClickListener;
     }
 
+    /**
+     * Returns the adapter's ItemClickListener
+     *
+     * @return mClickListener
+     */
+    public ItemClickListener getClickListener(){
+        return mClickListener;
+    }
 
     /**
      * Interface used by RecyclerViews to handle OnClick events,
      * governing the behavior when an item at a given position is clicked.
      */
-    interface ItemClickListener {
+    public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
 }

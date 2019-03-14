@@ -28,7 +28,6 @@ public abstract class TodoDatabase extends RoomDatabase {
             Log.d(TAG, "Creating TodoDatabase instance");
             sInstance = Room.databaseBuilder(context.getApplicationContext(),
                         TodoDatabase.class, TodoDatabase.DATABASE_NAME)
-                        .fallbackToDestructiveMigration()
                         .build();
          }
       }

@@ -33,6 +33,7 @@ public class TodoTask {
     }
 
     public TodoTask(int id, String title, String description, int color, Date createdAt, Date updatedAt){
+        this.id = id;
         this.title = title;
         this.description = description;
         this.color = color;

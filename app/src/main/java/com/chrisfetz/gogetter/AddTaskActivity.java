@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,6 @@ public class AddTaskActivity extends AppCompatActivity {
     private int mColor = 0;
     private static final String TAG = AddTaskActivity.class.getSimpleName();
 
-    //TODO: Add Logs for important tasks: color choice, task creation, errors
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,7 @@ public class AddTaskActivity extends AppCompatActivity {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "Color selection button pressed!");
                 showColorDialog();
             }
         });
@@ -82,10 +83,9 @@ public class AddTaskActivity extends AppCompatActivity {
                         R.color.color_task_blue);
                 mButton.setBackgroundColor(colors.getColor(which, blue));
 
-                //Keep track of the chosen color for TodoTask object
+                //Keep track of the chosen color for TodoTask object creation
                 mColor = which;
-                Toast.makeText(AddTaskActivity.this, "Color: "
-                        + Integer.toString(which), Toast.LENGTH_LONG).show();
+                Log.d(TAG, "Color selection made!");
                 dialog.dismiss();
             }
         });
@@ -100,11 +100,13 @@ public class AddTaskActivity extends AppCompatActivity {
         String title = mTitle.getText().toString();
         String description = mDescription.getText().toString();
         if (title.equals("")){
+            Log.d(TAG, "TodoTask object creation rejected: No title!");
             Toast.makeText(AddTaskActivity.this, R.string.error_no_title,
                     Toast.LENGTH_LONG).show();
         } else {
             Date date = new Date();
             final TodoTask todoTask = new TodoTask(title, description, mColor, date, date);
+            Log.d(TAG, "TodoTask created successfully. Running diskIO now...");
             BackendExecutors.getInstance().diskIO().execute(new Runnable() {
                 @Override
                 public void run() {

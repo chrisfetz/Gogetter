@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     private FloatingActionButton mFab;
     private TodoDatabase mTdb;
 
-    //TODO: Add logging for important tasks, list generation, onChanged called
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
 
         mFab.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
+                Log.d(TAG, "Floating action Button pressed.");
                 Intent goToAddTask = new Intent(MainActivity.this, AddTaskActivity.class);
                 startActivity(goToAddTask);
             }
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
 
     @Override
     public void onItemClick(View view, int position) {
+        Log.d(TAG, "Recyclerview item clicked.");
         //Todo: add onItemClick
     }
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         mViewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
             @Override
             public void onChanged(@Nullable List<TodoTask> tasks) {
-                Log.d(TAG, "List of items updated in the ViewModel by button!");
+                Log.d(TAG, "List of items set/updated in the ViewModel!");
                 mAdapter.setContents(tasks);
             }
         });
