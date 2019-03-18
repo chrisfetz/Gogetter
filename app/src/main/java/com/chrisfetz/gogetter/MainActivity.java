@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     // Constant for logging
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    // Keys for TodoTask
+    private static final String KEY_TODOTASK_ID = "todotask_id";
+
     //Member variables
     private RecyclerView mRecyclerView;
     private TodoAdapter mAdapter;
@@ -55,16 +58,31 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         setupViewModel();
     }
 
+    /**
+     * When a task in the RecyclerView is clicked, open a ViewTaskActivity for that task.
+     * @param view The view within the AdapterView that was clicked (this will be a view provided by the adapter)
+     * @param position The index in the TodoAdapter of the item clicked.
+     */
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, "Recyclerview item clicked.");
-        //Todo: add onItemClick
+
+        TodoTask todoTask = mAdapter.getContents().get(position);
+
+        Intent intent = new Intent(MainActivity.this, ViewTaskActivity.class);
+        intent.putExtra(KEY_TODOTASK_ID, todoTask.getId());
+        startActivity(intent);
     }
 
+    /**
+     * Creates the ViewModel that supplies the TodoTask objects
+     */
     private void setupViewModel(){
         MainViewModelFactory factory = new MainViewModelFactory(getApplication(), mTdb);
+
         final MainViewModel mViewModel = ViewModelProviders.of(this, factory)
                 .get(MainViewModel.class);
+
         mViewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
             @Override
             public void onChanged(@Nullable List<TodoTask> tasks) {

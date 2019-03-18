@@ -42,10 +42,10 @@ public class AddTaskActivity extends AppCompatActivity {
 
         mTdb = TodoDatabase.getInstance(getApplicationContext());
 
-        mTitle = findViewById(R.id.et_set_task_title);
-        mDescription = findViewById(R.id.et_set_task_description);
-        mSubmit = findViewById(R.id.fab_add_task);
-        mButton = findViewById(R.id.button_set_task_color);
+        mTitle = findViewById(R.id.et_addtask_set_task_title);
+        mDescription = findViewById(R.id.et_addtask_set_task_description);
+        mSubmit = findViewById(R.id.fab_addtask);
+        mButton = findViewById(R.id.button_addtask_set_task_color);
         colors = getResources().obtainTypedArray(R.array.color_values);
 
         mButton.setOnClickListener(new View.OnClickListener() {
