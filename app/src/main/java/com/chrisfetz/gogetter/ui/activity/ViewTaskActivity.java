@@ -1,8 +1,10 @@
-package com.chrisfetz.gogetter;
+package com.chrisfetz.gogetter.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.chrisfetz.gogetter.R;
 
 public class ViewTaskActivity extends AppCompatActivity {
 

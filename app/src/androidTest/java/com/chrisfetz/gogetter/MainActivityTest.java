@@ -1,5 +1,8 @@
 package com.chrisfetz.gogetter;
 
+import com.chrisfetz.gogetter.ui.activity.AddTaskActivity;
+import com.chrisfetz.gogetter.ui.activity.MainActivity;
+
 import org.junit.Rule;
 import org.junit.Test;
 

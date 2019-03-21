@@ -1,4 +1,4 @@
-package com.chrisfetz.gogetter;
+package com.chrisfetz.gogetter.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.chrisfetz.gogetter.BackendExecutors;
+import com.chrisfetz.gogetter.R;
 import com.chrisfetz.gogetter.database.TodoDatabase;
 import com.chrisfetz.gogetter.database.TodoTask;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

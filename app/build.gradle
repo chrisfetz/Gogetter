@@ -62,5 +62,4 @@ dependencies {
 
     //Espresso intents
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
-
 }

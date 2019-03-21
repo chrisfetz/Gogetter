@@ -1,11 +1,18 @@
-package com.chrisfetz.gogetter;
+package com.chrisfetz.gogetter.ui.activity;
 
 import androidx.lifecycle.Observer;
+
+import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 
-import com.chrisfetz.gogetter.database.TodoDatabase;
+import com.chrisfetz.gogetter.ui.viewmodel.MainViewModel;
+import com.chrisfetz.gogetter.ui.viewmodel.MainViewModelFactory;
+import com.chrisfetz.gogetter.R;
+import com.chrisfetz.gogetter.Repository;
+import com.chrisfetz.gogetter.TodoAdapter;
 import com.chrisfetz.gogetter.database.TodoTask;
+import com.chrisfetz.gogetter.utilities.Injector;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,8 +22,6 @@ import android.util.Log;
 import android.view.View;
 
 import java.util.List;
-
-import androidx.lifecycle.ViewModelProviders;
 
 public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemClickListener {
 
@@ -30,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     private RecyclerView mRecyclerView;
     private TodoAdapter mAdapter;
     private FloatingActionButton mFab;
-    private TodoDatabase mTdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         mAdapter = new TodoAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mTdb = TodoDatabase.getInstance(getApplicationContext());
         setupViewModel();
     }
 
@@ -78,10 +81,11 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
      * Creates the ViewModel that supplies the TodoTask objects
      */
     private void setupViewModel(){
-        MainViewModelFactory factory = new MainViewModelFactory(getApplication(), mTdb);
+        Context context = getApplicationContext();
+        Repository myRepo = Injector.provideRepository(context);
+        MainViewModelFactory factory = Injector.provideMainViewModelFactory(getApplication(), context);
 
-        final MainViewModel mViewModel = ViewModelProviders.of(this, factory)
-                .get(MainViewModel.class);
+        final MainViewModel mViewModel = factory.create(new MainViewModel(getApplication(), myRepo));
 
         mViewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
             @Override
