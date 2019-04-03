@@ -73,7 +73,6 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
         int yellow = ContextCompat.getColor(mContext, R.color.color_task_yellow);
         int green = ContextCompat.getColor(mContext, R.color.color_task_green);
 
-
         switch (color) {
             case 0: holder.myLinearLayout.setBackgroundColor(blue);
             break;

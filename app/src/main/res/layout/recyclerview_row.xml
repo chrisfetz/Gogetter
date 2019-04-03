@@ -14,4 +14,10 @@
         android:textSize="20sp"
         android:textColor="@color/color_text_black"/>
 
+    <TextView
+        android:id="@+id/tvTaskDueDate"
+        android:textSize="@dimen/text_size_small"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

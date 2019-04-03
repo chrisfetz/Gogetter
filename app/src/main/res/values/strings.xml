@@ -17,4 +17,6 @@
 
     <!--Error strings-->
     <string name="error_no_title">Please enter a title.</string>
+
+    <string name="text_created_at">Created at %1$s</string>
 </resources>

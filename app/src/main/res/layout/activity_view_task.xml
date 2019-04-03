@@ -6,20 +6,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.ViewTaskActivity"
-    android:orientation="vertical"
-    android:background="@color/color_task_blue">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_viewtask_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_task_blue"
         android:textSize="@dimen/text_size_standard" />
 
     <TextView
         android:id="@+id/tv_viewtask_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_standard" />
+        android:textSize="@dimen/text_size_medium" />
 
     <TextView
         android:id="@+id/tv_viewtask_created_at"

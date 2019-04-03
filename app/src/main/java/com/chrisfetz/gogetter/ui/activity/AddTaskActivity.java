@@ -46,7 +46,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         mTitle = findViewById(R.id.et_addtask_set_task_title);
         mDescription = findViewById(R.id.et_addtask_set_task_description);
-        mSubmit = findViewById(R.id.fab_addtask);
+        mSubmit = findViewById(R.id.fab_add_task);
         mButton = findViewById(R.id.button_addtask_set_task_color);
         colors = getResources().obtainTypedArray(R.array.color_values);
 

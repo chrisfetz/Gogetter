@@ -9,8 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.ViewTaskActivity"></activity>
-        <activity android:name=".ui.activity.AddTaskActivity" />
+        <activity android:name=".ui.activity.ViewTaskActivity"
+            android:parentActivityName="com.chrisfetz.gogetter.ui.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.chrisfetz.gogetter.ui.activity.MainActivity" />
+        </activity>
+        <activity android:name=".ui.activity.AddTaskActivity"
+            android:parentActivityName="com.chrisfetz.gogetter.ui.activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.chrisfetz.gogetter.ui.activity.MainActivity" />
+        </activity>
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

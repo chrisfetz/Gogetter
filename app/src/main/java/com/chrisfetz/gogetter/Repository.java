@@ -44,8 +44,29 @@ public class Repository {
         return instance;
     }
 
+    /**
+     *
+     * @return Every TodoTask that exists in the database.
+     */
     public LiveData<List<TodoTask>> getTasks() {
         return tasks;
+    }
+
+    /**
+     *
+     * @param id The id of the TodoTask in question
+     * @return The TodoTask with the given id
+     */
+    public LiveData<TodoTask> loadTaskById(int id){
+        return mTodoDao.loadTaskById(id);
+    }
+
+    /**
+     * Deletes the given TodoTask
+     * @param todoTask
+     */
+    public void deleteTask(TodoTask todoTask){
+        mTodoDao.deleteTask(todoTask);
     }
 
 }

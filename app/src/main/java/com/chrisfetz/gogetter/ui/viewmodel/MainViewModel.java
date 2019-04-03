@@ -27,8 +27,29 @@ public class MainViewModel extends AndroidViewModel {
         Log.d(TAG, "Creating new MainViewModel using MainViewModel constructor.");
     }
 
+    /**
+     *
+     * @return The list of tasks from the repo
+     */
     public LiveData<List<TodoTask>> getTasks() {
         Log.d(TAG, "Getting tasks from Repository using MainViewModel.");
         return mRepo.getTasks();
+    }
+
+    /**
+     *
+     * @param id The id of the TodoTask in question
+     * @return The TodoTask with the given id
+     */
+    public LiveData<TodoTask> loadTaskById(int id){
+        return mRepo.loadTaskById(id);
+    }
+
+    /**
+     * Deletes the given TodoTask
+     * @param todoTask
+     */
+    public void deleteTask(TodoTask todoTask){
+        mRepo.deleteTask(todoTask);
     }
 }

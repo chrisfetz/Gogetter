@@ -1,11 +1,14 @@
 package com.chrisfetz.gogetter.ui.activity;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 
+import com.chrisfetz.gogetter.BackendExecutors;
+import com.chrisfetz.gogetter.database.TodoDatabase;
 import com.chrisfetz.gogetter.ui.viewmodel.MainViewModel;
 import com.chrisfetz.gogetter.ui.viewmodel.MainViewModelFactory;
 import com.chrisfetz.gogetter.R;
@@ -16,6 +19,8 @@ import com.chrisfetz.gogetter.utilities.Injector;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     private RecyclerView mRecyclerView;
     private TodoAdapter mAdapter;
     private FloatingActionButton mFab;
+    private TodoDatabase mTdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         //setting onclick for Floating action button
         mFab = findViewById(R.id.fab_main);
 
+        mTdb = TodoDatabase.getInstance(this);
+
         mFab.setOnClickListener(new View.OnClickListener() {
             public void onClick (View v){
                 Log.d(TAG, "Floating action Button pressed.");
@@ -51,12 +59,32 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
                 startActivity(goToAddTask);
             }
         });
-        
+
         // set up the RecyclerView
         mRecyclerView = findViewById(R.id.rvTasks);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new TodoAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                // Here is where you'll implement swipe to delete
+                BackendExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        List<TodoTask> tasks = mAdapter.getContents();
+                        mTdb.todoDao().deleteTask(tasks.get(position));
+                    }
+                });
+            }
+        }).attachToRecyclerView(mRecyclerView);
 
         setupViewModel();
     }
@@ -71,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         Log.d(TAG, "Recyclerview item clicked.");
 
         TodoTask todoTask = mAdapter.getContents().get(position);
-
+        Log.d(TAG, "Item " + todoTask.getId() + " clicked.");
         Intent intent = new Intent(MainActivity.this, ViewTaskActivity.class);
         intent.putExtra(KEY_TODOTASK_ID, todoTask.getId());
         startActivity(intent);
