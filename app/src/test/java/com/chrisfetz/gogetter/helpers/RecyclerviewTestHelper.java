@@ -34,7 +34,7 @@ public class RecyclerviewTestHelper {
      * Creates an empty ItemClickListener to satisfy the TodoAdapter constructor
      * @return An instance of ItemClickListener
      */
-    public static TodoAdapter.ItemClickListener getListener(){
+    public static TodoAdapter.ItemClickListener getEmptyListener(){
         TodoAdapter.ItemClickListener itemClickListener = new TodoAdapter.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -44,13 +44,15 @@ public class RecyclerviewTestHelper {
         return itemClickListener;
     }
 
+
+
     /**
      * Creates a TodoAdapter using the Instrumentation context and an empty ItemClickListener.
      * @return A TodoAdapter
      */
     public static TodoAdapter getAdapter(){
         Context instrumentationContext = InstrumentationRegistry.getInstrumentation().getContext();
-        TodoAdapter.ItemClickListener listener = getListener();
+        TodoAdapter.ItemClickListener listener = getEmptyListener();
         TodoAdapter adapter = new TodoAdapter(instrumentationContext, listener);
         return adapter;
     }

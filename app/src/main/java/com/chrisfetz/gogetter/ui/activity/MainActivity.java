@@ -66,27 +66,11 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         mAdapter = new TodoAdapter(this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                return false;
-            }
+        //get and attach ItemTouchHelper
+        getItemTouchHelper().attachToRecyclerView(mRecyclerView);
 
-            @Override
-            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
-                // Here is where you'll implement swipe to delete
-                BackendExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        int position = viewHolder.getAdapterPosition();
-                        List<TodoTask> tasks = mAdapter.getContents();
-                        mTdb.todoDao().deleteTask(tasks.get(position));
-                    }
-                });
-            }
-        }).attachToRecyclerView(mRecyclerView);
-
-        setupViewModel();
+        MainViewModel mVm = setupViewModel();
+        observeData(mVm);
     }
 
     /**
@@ -96,10 +80,9 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
      */
     @Override
     public void onItemClick(View view, int position) {
-        Log.d(TAG, "Recyclerview item clicked.");
-
         TodoTask todoTask = mAdapter.getContents().get(position);
         Log.d(TAG, "Item " + todoTask.getId() + " clicked.");
+
         Intent intent = new Intent(MainActivity.this, ViewTaskActivity.class);
         intent.putExtra(KEY_TODOTASK_ID, todoTask.getId());
         startActivity(intent);
@@ -108,14 +91,21 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
     /**
      * Creates the ViewModel that supplies the TodoTask objects
      */
-    private void setupViewModel(){
+    private MainViewModel setupViewModel(){
         Context context = getApplicationContext();
         Repository myRepo = Injector.provideRepository(context);
         MainViewModelFactory factory = Injector.provideMainViewModelFactory(getApplication(), context);
 
         final MainViewModel mViewModel = factory.create(new MainViewModel(getApplication(), myRepo));
 
-        mViewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
+        return mViewModel;
+    }
+
+    /**
+     * Updates the TodoAdapter with the data from the MainViewModel's repository
+     */
+    private void observeData(MainViewModel viewModel){
+        viewModel.getTasks().observe(this, new Observer<List<TodoTask>>() {
             @Override
             public void onChanged(@Nullable List<TodoTask> tasks) {
                 Log.d(TAG, "List of items set/updated in the ViewModel!");
@@ -124,5 +114,28 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         });
     }
 
+    /**
+     * Sets up the ItemTouchHelper for the TodoAdapter
+     */
+    private ItemTouchHelper getItemTouchHelper(){
+        return new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
+                // Swipes to delete code
+                BackendExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        int position = viewHolder.getAdapterPosition();
+                        List<TodoTask> tasks = mAdapter.getContents();
+                        mTdb.todoDao().deleteTask(tasks.get(position));
+                    }
+                });
+            }
+        });
+    }
 }
