@@ -23,6 +23,7 @@ import java.util.Date;
 
 public class AddTaskActivity extends AppCompatActivity {
 
+    //The database instance
     private TodoDatabase mTdb;
 
     //UI Elements
@@ -34,7 +35,10 @@ public class AddTaskActivity extends AppCompatActivity {
     //The colors are pulled from this array
     TypedArray colors;
 
+    //The color chosen by the user
     private int mColor = 0;
+
+    //Activity name for logging
     private static final String TAG = AddTaskActivity.class.getSimpleName();
 
     @Override
@@ -42,31 +46,25 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        mTdb = TodoDatabase.getInstance(getApplicationContext());
+        setUpActivityFixtures();
+    }
 
+    /**
+     * Initializes various variables used in the Activity
+     */
+    private void setUpActivityFixtures() {
+        mTdb = TodoDatabase.getInstance(getApplicationContext());
         mTitle = findViewById(R.id.et_addtask_set_task_title);
         mDescription = findViewById(R.id.et_addtask_set_task_description);
         mSubmit = findViewById(R.id.fab_add_task);
         mButton = findViewById(R.id.button_addtask_set_task_color);
         colors = getResources().obtainTypedArray(R.array.color_values);
 
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Color selection button pressed!");
-                showColorDialog();
-            }
-        });
+        mButton.setOnClickListener(getColorButtonListener());
 
-        mSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit();
-            }
-        });
+        mSubmit.setOnClickListener(getSubmitListener());
     }
 
-    //TODO: Use a DialogFragment so dialog does not disappear on phone rotation
     /**
      * Creates a dialog to pick the task's color when the user presses the "SET COLOR" button.
      * Changes the color of the button to the user's choice.
@@ -117,5 +115,30 @@ public class AddTaskActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    /**
+     * @return mSubmit's OnClickListener
+     */
+    private View.OnClickListener getSubmitListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmit();
+            }
+        };
+    }
+
+    /**
+     * @return mButton's OnClickListener
+     */
+    private View.OnClickListener getColorButtonListener() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Color selection button pressed!");
+                showColorDialog();
+            }
+        };
     }
 }

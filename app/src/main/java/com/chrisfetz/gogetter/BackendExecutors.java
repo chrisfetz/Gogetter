@@ -20,12 +20,22 @@ public class BackendExecutors {
     private final Executor mainThread;
     private final Executor networkIO;
 
+    /**
+     * Creates three Executors to do tasks off the main ui thread
+     * @param diskIO Disk writes executor, makes changes on disk
+     * @param networkIO Makes calls to the network
+     * @param mainThread Makes calls on the main UI thread
+     */
     private BackendExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
         this.diskIO = diskIO;
         this.networkIO = networkIO;
         this.mainThread = mainThread;
     }
 
+    /**
+     * Singleton constructor of BackendExecutors
+     * @return a new instance of BackendExecutors if one doesn't already exist, or the current existing one
+     */
     public static BackendExecutors getInstance() {
         if (sInstance == null) {
             synchronized (LOCK) {
@@ -37,18 +47,31 @@ public class BackendExecutors {
         return sInstance;
     }
 
+    /**
+     * @return the disk writes Executor
+     */
     public Executor diskIO() {
         return diskIO;
     }
 
+    /**
+     * @return the main thread executor
+     */
     public Executor mainThread() {
         return mainThread;
     }
 
+    /**
+     * @return the network executor
+     */
     public Executor networkIO() {
         return networkIO;
     }
 
+    /**
+     * If a task needs to be performed on the main thread, another thread can pass
+     * off a task to this Executor.
+     */
     private static class MainThreadExecutor implements Executor {
         private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 

@@ -21,6 +21,11 @@ public class Repository {
     private static TodoDao mTodoDao;
     private static BackendExecutors mBackendExecutors;
 
+    /**
+     * Initializes a Repository instance with the DAO and Executors it needs
+     * @param todoDao Performs database tasks like fetching TodoTasks and deleting them.
+     * @param backendExecutors Performs actions that require Executors, like database reads/writes.
+     */
     private Repository(TodoDao todoDao, BackendExecutors backendExecutors){
         mTodoDao = todoDao;
         mBackendExecutors = backendExecutors;

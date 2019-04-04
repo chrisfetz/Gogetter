@@ -52,13 +52,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
 
         mTdb = TodoDatabase.getInstance(this);
 
-        mFab.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View v){
-                Log.d(TAG, "Floating action Button pressed.");
-                Intent goToAddTask = new Intent(MainActivity.this, AddTaskActivity.class);
-                startActivity(goToAddTask);
-            }
-        });
+        mFab.setOnClickListener(getFabClickListener());
 
         // set up the RecyclerView
         mRecyclerView = findViewById(R.id.rvTasks);
@@ -69,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
         //get and attach ItemTouchHelper
         getItemTouchHelper().attachToRecyclerView(mRecyclerView);
 
+        //set up the MainViewModel and observe data
         MainViewModel mVm = setupViewModel();
         observeData(mVm);
     }
@@ -137,5 +132,19 @@ public class MainActivity extends AppCompatActivity implements TodoAdapter.ItemC
                 });
             }
         });
+    }
+
+    /**
+     * Sets up the OnClickListener for the FloatingActionButton
+     */
+    private View.OnClickListener getFabClickListener(){
+        return new View.OnClickListener() {
+            //When clicked, got to AddTaskActivity
+            public void onClick (View v){
+                Log.d(TAG, "Floating action Button pressed.");
+                Intent goToAddTask = new Intent(MainActivity.this, AddTaskActivity.class);
+                startActivity(goToAddTask);
+            }
+        };
     }
 }

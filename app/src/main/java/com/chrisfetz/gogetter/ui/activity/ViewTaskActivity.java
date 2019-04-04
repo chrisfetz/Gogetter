@@ -54,6 +54,15 @@ public class ViewTaskActivity extends AppCompatActivity {
         mTdb = TodoDatabase.getInstance(getApplicationContext());
 
         Intent intent = getIntent();
+        redirectIfNull(intent);
+    }
+
+    /**
+     * Redirects to the TodoTask creation screen if not brought to this screen by
+     *
+     * @param intent The intent formed by clicking on an item in MainActivity
+     */
+    private void redirectIfNull(Intent intent) {
         if (intent != null && intent.hasExtra(KEY_TODOTASK_ID)){
             TASK_ID = intent.getIntExtra(KEY_TODOTASK_ID, DEFAULT_TASK_ID);
             setupViewModel(TASK_ID);
@@ -62,7 +71,6 @@ public class ViewTaskActivity extends AppCompatActivity {
             startActivity(goToATA);
             Log.d(TAG, "No id found.");
         }
-
     }
 
     /**
